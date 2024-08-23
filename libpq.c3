@@ -1,3 +1,5 @@
+module postgres::pg;
+import std::io;
 /*-------------------------------------------------------------------------
  *
  * libpq.c3
@@ -29,7 +31,6 @@ macro atooid(x) {
  * between frontend and backend, and also to export them to libpq
  * applications.
  */
-module postgres::pg;
 const char DIAG_SEVERITY = 'S';
 const char DIAG_SEVERITY_NONLOCALIZED = 'V';
 const char DIAG_SQLSTATE = 'C';
@@ -102,7 +103,7 @@ enum PGConnStatusType {
 }
 
 enum PostgresPollingStatusType {
-    FAILED = 0,
+    FAILED,
     READING,        /* These two indicate that one may      */
     WRITING,        /* use select before polling again.   */
     OK,
@@ -111,7 +112,7 @@ enum PostgresPollingStatusType {
 }
 
 enum PGExecStatusType {
-    EMPTY_QUERY = 0,        /* empty query string was executed */
+    EMPTY_QUERY,        /* empty query string was executed */
     COMMAND_OK,            /* a query command that doesn't return
                                  * anything was executed properly by the
                                  * backend */
@@ -277,6 +278,8 @@ struct PGresAttDesc {
 }
 
 module postgres::pq;
+import postgres::pg;
+import std::io;
 /* ----------------
  * Exported functions of libpq
  * ----------------
@@ -677,8 +680,8 @@ extern fn void pq_displayTuples(PGresult *res,
 
 extern fn void pq_printTuples(PGresult *res,
                           File *fout,    /* output stream */
-                          int PrintAttNames,    /* print attribute names */
-                          int TerseOutput,    /* delimiter bars */
+                          int print_att_names,    /* print attribute names */
+                          int terse_output,    /* delimiter bars */
                           int colWidth)  @extern("PQprintTuples");   /* width of column, if 0, use
                                              * variable width */
 
