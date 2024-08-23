@@ -1,17 +1,18 @@
-import postgres;
+import postgres::pg;
+import postgres::pq;
 import std::io;
 import libc;
 
 fn int main(String [] args) {
-    PGconn *conn = postgres::pq_connect_db(
+    PGconn *conn = pq::pq_connectdb(
         " host=localhost"
-        " user=user"
-        " dbname=user"
+        " user=lucas"
+        " dbname=lucas"
     );
 
-    if (postgres::pq_status(conn) == CONNECTION_BAD) {
+    if (pq::pq_status(conn) == PGConnStatusType.BAD) {
         io::printf("Connection to postgresdatabase failed: %s\n",
-                   postgres::pq_errorMessage(conn));
+                   pq::pq_errorMessage(conn));
         return 1;
     }
     return 0;
