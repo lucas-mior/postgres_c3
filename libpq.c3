@@ -307,7 +307,7 @@ extern PGconn *PQsetdbLogin(char *pghost, const char *pgport,
 extern void PQfinish(PGconn *conn);
 
 /* get info about connection options known to PQconnectdb */
-extern PQconninfoOption *PQconndefaults(void);
+extern PQconninfoOption *PQconndefaults();
 
 /* parse connection options in same way as PQconnectdb */
 extern PQconninfoOption *PQconninfoParse(char *conninfo, char **errmsg);
@@ -500,7 +500,7 @@ extern int    PQendcopy(PGconn *conn);
 /* Set blocking/nonblocking connection to the backend */
 extern int    PQsetnonblocking(PGconn *conn, int arg);
 extern int    PQisnonblocking(PGconn *conn);
-extern int    PQisthreadsafe(void);
+extern int    PQisthreadsafe();
 extern PGPing PQping(char *conninfo);
 extern PGPing PQpingParams(char *const *keywords,
                            char *const *values, int expand_dbname);
@@ -642,7 +642,7 @@ extern int    lo_export(PGconn *conn, Oid lobjId, char *filename);
 /* === in fe-misc.c === */
 
 /* Get the version of the libpq library in use */
-extern int    PQlibVersion(void);
+extern int    PQlibVersion();
 
 /* Determine length of multibyte encoded char at *s */
 extern int    PQmblen(char *s, int encoding);
@@ -654,7 +654,7 @@ extern int    PQmblenBounded(char *s, int encoding);
 extern int    PQdsplen(char *s, int encoding);
 
 /* Get encoding id from environment variable PGCLIENTENCODING */
-extern int    PQenv2encoding(void);
+extern int    PQenv2encoding();
 
 /* === in fe-auth.c === */
 
@@ -671,6 +671,6 @@ extern int    pg_valid_server_encoding_id(int encoding);
 
 /* Support for overriding sslpassword handling with a callback */
 def PQsslKeyPassHook_OpenSSL_type = fn int (char *buf, int size, PGconn *conn);
-extern PQsslKeyPassHook_OpenSSL_type PQgetSSLKeyPassHook_OpenSSL(void);
+extern PQsslKeyPassHook_OpenSSL_type PQgetSSLKeyPassHook_OpenSSL();
 extern void PQsetSSLKeyPassHook_OpenSSL(PQsslKeyPassHook_OpenSSL_type hook);
 extern int    PQdefaultSSLKeyPassHook_OpenSSL(char *buf, int size, PGconn *conn);
