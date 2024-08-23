@@ -192,7 +192,7 @@ def PGresult = void;
 def PGcancel = void;
 
 /* PGnotify represents the occurrence of a NOTIFY message.
- * Ideally this would be an opaque typedef, but it's so simple that it's
+ * Ideally this would be an opaque type, but it's so simple that it's
  * unlikely to change.
  * NOTE: in Postgres 6.4 and later, the be_pid is the notifying backend's,
  * whereas in earlier versions it was always your own backend's PID.
