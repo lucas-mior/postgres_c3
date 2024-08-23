@@ -206,26 +206,25 @@ struct PGnotify {
 }
 
 /* Function types for notice-handling callbacks */
-typedef void (*PQnoticeReceiver) (void *arg, const PGresult *res);
-typedef void (*PQnoticeProcessor) (void *arg, const char *message);
+def PQnoticeReceiver = fn void (void *arg, PGresult *res);
+def PQnoticeProcessor = fn void (void *arg, char *message);
 
 /* Print options for PQprint() */
-typedef char pqbool;
+def PQbool = char;
 
-typedef struct _PQprintOpt
-{
-    pqbool        header;            /* print output field headings and row count */
-    pqbool        align;            /* fill align the fields */
-    pqbool        standard;        /* old brain dead format */
-    pqbool        html3;            /* output html tables */
-    pqbool        expanded;        /* expand tables */
-    pqbool        pager;            /* use pager for output if needed */
+struct PQprintOpt {
+    PQbool        header;            /* print output field headings and row count */
+    PQbool        align;            /* fill align the fields */
+    PQbool        standard;        /* old brain dead format */
+    PQbool        html3;            /* output html tables */
+    PQbool        expanded;        /* expand tables */
+    PQbool        pager;            /* use pager for output if needed */
     char       *fieldSep;        /* field separator */
     char       *tableOpt;        /* insert to HTML <table ...> */
     char       *caption;        /* HTML <caption> */
     char      **fieldName;        /* null terminated array of replacement field
                                  * names */
-} PQprintOpt;
+}
 
 /* ----------------
  * Structure for the conninfo parameter definitions returned by PQconndefaults
@@ -236,8 +235,7 @@ typedef struct _PQprintOpt
  * will release both the val strings and the PQconninfoOption array itself.
  * ----------------
  */
-typedef struct _PQconninfoOption
-{
+struct PQconninfoOption {
     char       *keyword;        /* The keyword of the option            */
     char       *envvar;            /* Fallback environment variable name    */
     char       *compiled;        /* Fallback compiled in default value    */
@@ -249,29 +247,26 @@ typedef struct _PQconninfoOption
                                  * hide value "D"  Debug option - don't show
                                  * by default */
     int            dispsize;        /* Field size in characters for dialog    */
-} PQconninfoOption;
+}
 
 /* ----------------
  * PQArgBlock -- structure for PQfn() arguments
  * ----------------
  */
-typedef struct
-{
+struct PQArgBlock {
     int            len;
     int            isint;
-    union
-    {
+    union u {
         int           *ptr;        /* can't use void (dec compiler barfs)     */
         int            integer;
-    }            u;
-} PQArgBlock;
+    }
+}
 
 /* ----------------
  * PGresAttDesc -- Data about a single attribute (column) of a query result
  * ----------------
  */
-typedef struct pgresAttDesc
-{
+struct PGresAttDesc {
     char       *name;            /* column name */
     Oid            tableid;        /* source table, if known */
     int            columnid;        /* source column, if known */
@@ -279,7 +274,7 @@ typedef struct pgresAttDesc
     Oid            typid;            /* type id */
     int            typlen;            /* type size */
     int            atttypmod;        /* type-specific modifier info */
-} PGresAttDesc;
+}
 
 /* ----------------
  * Exported functions of libpq
