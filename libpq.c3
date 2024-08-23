@@ -63,9 +63,9 @@ const int LIBPQ_HAS_SSL_LIBRARY_DETECTION = 1;
 /*
  * Option flags for PQcopyResult
  */
-const int COPYRES_ATTRS         = 0x01;
-const int COPYRES_TUPLES         = 0x02;    /* Implies PG_COPYRES_ATTRS */
-const int COPYRES_EVENTS         = 0x04;
+const int COPYRES_ATTRS       = 0x01;
+const int COPYRES_TUPLES      = 0x02;    /* Implies PG_COPYRES_ATTRS */
+const int COPYRES_EVENTS      = 0x04;
 const int COPYRES_NOTICEHOOKS = 0x08;
 
 /* Application-visible enum types */
