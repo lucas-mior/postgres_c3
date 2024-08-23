@@ -670,7 +670,7 @@ extern int    pg_valid_server_encoding_id(int encoding);
 /* === in fe-secure-openssl.c === */
 
 /* Support for overriding sslpassword handling with a callback */
-typedef int (*PQsslKeyPassHook_OpenSSL_type) (char *buf, int size, PGconn *conn);
+def PQsslKeyPassHook_OpenSSL_type = fn int (char *buf, int size, PGconn *conn);
 extern PQsslKeyPassHook_OpenSSL_type PQgetSSLKeyPassHook_OpenSSL(void);
 extern void PQsetSSLKeyPassHook_OpenSSL(PQsslKeyPassHook_OpenSSL_type hook);
 extern int    PQdefaultSSLKeyPassHook_OpenSSL(char *buf, int size, PGconn *conn);
