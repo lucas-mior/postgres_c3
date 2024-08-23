@@ -1,3 +1,5 @@
+module postgres;
+
 import libc;
 import std::io;
 
@@ -588,8 +590,3 @@ def PQsslKeyPassHook_OpenSSL_type = fn int (char *buf, int size, PGconn *conn);
 extern fn PQsslKeyPassHook_OpenSSL_type pq_getSSLKeyPassHook_OpenSSL() @extern("PQgetSSLKeyPassHook_OpenSSL");
 extern fn void pq_setSSLKeyPassHook_OpenSSL(PQsslKeyPassHook_OpenSSL_type hook) @extern("PQsetSSLKeyPassHook_OpenSSL");
 extern fn int pq_defaultSSLKeyPassHook_OpenSSL(char *buf, int size, PGconn *conn) @extern("PQdefaultSSLKeyPassHook_OpenSSL");
-
-fn int main(String [] args) {
-    PGconn *conn = pq_connect_start("aaa");
-    return 0;
-}
