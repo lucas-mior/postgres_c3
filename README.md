@@ -5,7 +5,7 @@ clients, for experimental purposes.
 ## Files
 - `main.c3` contains a simple test program that connects to a database on
   localhost.
-- `postgres.c3` is a hand made translation of the libpq headers from my linux
+- `libpq.c3` is a hand made translation of the libpq headers from my linux
   system.
 
 ## How to test it
