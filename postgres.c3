@@ -41,8 +41,7 @@ const int PG_COPYRES_TUPLES = 0x02;
 const int PG_COPYRES_EVENTS = 0x04;
 const int PG_COPYRES_NOTICEHOOKS = 0x08;
 
-typedef enum
-{
+enum ConnStatusType {
 	CONNECTION_OK,
 	CONNECTION_BAD,
 	/* Non-blocking mode only below here */
@@ -65,20 +64,18 @@ typedef enum
 	CONNECTION_GSS_STARTUP,		/* Negotiating GSSAPI. */
 	CONNECTION_CHECK_TARGET,	/* Checking target server properties. */
 	CONNECTION_CHECK_STANDBY	/* Checking if server is in standby mode. */
-} ConnStatusType;
+}
 
-typedef enum
-{
+enum PostgresPollingStatusType {
 	PGRES_POLLING_FAILED = 0,
 	PGRES_POLLING_READING,		/* These two indicate that one may	  */
 	PGRES_POLLING_WRITING,		/* use select before polling again.   */
 	PGRES_POLLING_OK,
 	PGRES_POLLING_ACTIVE		/* unused; keep for awhile for backwards
 								 * compatibility */
-} PostgresPollingStatusType;
+}
 
-typedef enum
-{
+enum ExecStatusType {
 	PGRES_EMPTY_QUERY = 0,		/* empty query string was executed */
 	PGRES_COMMAND_OK,			/* a query command that doesn't return
 								 * anything was executed properly by the
@@ -97,54 +94,49 @@ typedef enum
 	PGRES_PIPELINE_SYNC,		/* pipeline synchronization point */
 	PGRES_PIPELINE_ABORTED		/* Command didn't run because of an abort
 								 * earlier in a pipeline */
-} ExecStatusType;
+}
 
-typedef enum
-{
+enum PGTransactionStatusType {
 	PQTRANS_IDLE,				/* connection idle */
 	PQTRANS_ACTIVE,				/* command in progress */
 	PQTRANS_INTRANS,			/* idle, within transaction block */
 	PQTRANS_INERROR,			/* idle, within failed transaction */
 	PQTRANS_UNKNOWN				/* cannot determine status */
-} PGTransactionStatusType;
+}
 
-typedef enum
-{
+enum PGVerbosity {
 	PQERRORS_TERSE,				/* single-line error messages */
 	PQERRORS_DEFAULT,			/* recommended style */
 	PQERRORS_VERBOSE,			/* all the facts, ma'am */
 	PQERRORS_SQLSTATE			/* only error severity and SQLSTATE code */
-} PGVerbosity;
+}
 
-typedef enum
-{
+enum PGContextVisibility {
 	PQSHOW_CONTEXT_NEVER,		/* never show CONTEXT field */
 	PQSHOW_CONTEXT_ERRORS,		/* show CONTEXT for errors only (default) */
 	PQSHOW_CONTEXT_ALWAYS		/* always show CONTEXT field */
-} PGContextVisibility;
+}
 
 /*
  * PGPing - The ordering of this enum should not be altered because the
  * values are exposed externally via pg_isready.
  */
 
-typedef enum
-{
+enum PGPing {
 	PQPING_OK,					/* server is accepting connections */
 	PQPING_REJECT,				/* server is alive but rejecting connections */
 	PQPING_NO_RESPONSE,			/* could not establish connection */
 	PQPING_NO_ATTEMPT			/* connection not attempted (bad params) */
-} PGPing;
+}
 
 /*
  * PGpipelineStatus - Current status of pipeline mode
  */
-typedef enum
-{
+enum PGpipelineStatus {
 	PQ_PIPELINE_OFF,
 	PQ_PIPELINE_ON,
 	PQ_PIPELINE_ABORTED
-} PGpipelineStatus;
+}
 
 /* PGconn encapsulates a connection to the backend.
  * The contents of this struct are not supposed to be known to applications.
