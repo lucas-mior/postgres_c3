@@ -1,93 +1,17 @@
-/*-------------------------------------------------------------------------
- *
- * libpq-fe.h
- *	  This file contains definitions for structures and
- *	  externs for functions used by frontend postgres applications.
- *
- * Portions Copyright (c) 1996-2023, PostgreSQL Global Development Group
- * Portions Copyright (c) 1994, Regents of the University of California
- *
- * src/interfaces/libpq/libpq-fe.h
- *
- *-------------------------------------------------------------------------
- */
-
-#ifndef LIBPQ_FE_H
-#define LIBPQ_FE_H
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 import libc;
 
-/*
- * postgres_ext.h defines the backend's externally visible types,
- * such as Oid.
- */
-
-/*-------------------------------------------------------------------------
- *
- * postgres_ext.h
- *
- *	   This file contains declarations of things that are visible everywhere
- *	in PostgreSQL *and* are visible to clients of frontend interface libraries.
- *	For example, the Oid type is part of the API of libpq and other libraries.
- *
- *	   Declarations which are specific to a particular interface should
- *	go in the header file for that interface (such as libpq-fe.h).  This
- *	file is only for fundamental Postgres declarations.
- *
- *	   User-written C functions don't count as "external to Postgres."
- *	Those function much as local modifications to the backend itself, and
- *	use header files that are otherwise internal to Postgres to interface
- *	with the backend.
- *
- * src/include/postgres_ext.h
- *
- *-------------------------------------------------------------------------
- */
-
-#ifndef POSTGRES_EXT_H
-#define POSTGRES_EXT_H
-
-
-/* src/include/pg_config_ext.h.  Generated from pg_config_ext.h.in by configure.  */
-/*
- * src/include/pg_config_ext.h.in.  This is generated manually, not by
- * autoheader, since we want to limit which symbols get defined here.
- */
-
-/* Define to the name of a signed 64-bit integer type. */
 #define PG_INT64_TYPE long int
 
-/*
- * Object ID is a fundamental type in Postgres.
- */
 typedef unsigned int Oid;
 
-#ifdef __cplusplus
 #define InvalidOid		(Oid(0))
-#else
-#define InvalidOid		((Oid) 0)
-#endif
 
 #define OID_MAX  UINT_MAX
-/* you will need to include <limits.h> to use the above #define */
 
 #define atooid(x) ((Oid) strtoul((x), NULL, 10))
-/* the above needs <stdlib.h> */
 
-
-/* Define a signed 64-bit integer type for use in client API declarations. */
 typedef PG_INT64_TYPE pg_int64;
 
-/*
- * Identifiers of error message fields.  Kept here to keep common
- * between frontend and backend, and also to export them to libpq
- * applications.
- */
 #define PG_DIAG_SEVERITY		'S'
 #define PG_DIAG_SEVERITY_NONLOCALIZED 'V'
 #define PG_DIAG_SQLSTATE		'C'
@@ -107,34 +31,14 @@ typedef PG_INT64_TYPE pg_int64;
 #define PG_DIAG_SOURCE_LINE		'L'
 #define PG_DIAG_SOURCE_FUNCTION 'R'
 
-#endif							/* POSTGRES_EXT_H */
-
-/*
- * These symbols may be used in compile-time #ifdef tests for the availability
- * of newer libpq features.
- */
-/* Indicates presence of PQenterPipelineMode and friends */
 #define LIBPQ_HAS_PIPELINING 1
-/* Indicates presence of PQsetTraceFlags; also new PQtrace output format */
 #define LIBPQ_HAS_TRACE_FLAGS 1
-/* Indicates that PQsslAttribute(NULL, "library") is useful */
 #define LIBPQ_HAS_SSL_LIBRARY_DETECTION 1
 
-/*
- * Option flags for PQcopyResult
- */
 #define PG_COPYRES_ATTRS		  0x01
 #define PG_COPYRES_TUPLES		  0x02	/* Implies PG_COPYRES_ATTRS */
 #define PG_COPYRES_EVENTS		  0x04
 #define PG_COPYRES_NOTICEHOOKS	  0x08
-
-/* Application-visible enum types */
-
-/*
- * Although it is okay to add to these lists, values which become unused
- * should never be removed, nor should constants be redefined - that would
- * break compatibility with existing code.
- */
 
 typedef enum
 {
@@ -752,5 +656,3 @@ extern int	PQdefaultSSLKeyPassHook_OpenSSL(char *buf, int size, PGconn *conn);
 #ifdef __cplusplus
 }
 #endif
-
-#endif							/* LIBPQ_FE_H */
