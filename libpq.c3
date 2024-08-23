@@ -739,14 +739,6 @@ extern fn char *encryptPassword(char *passwd, char *user)
 extern fn char *encryptPasswordConn(PGconn *conn, char *passwd, char
 *user, char *algorithm) @extern("PQencryptPasswordConn");
 
-/* === in encnames.c === */
-
-extern fn int    pg_char_to_encoding(char *name) @extern("pg_char_to_encoding");
-extern fn char *pg_encoding_to_char(int encoding)
-@extern("pg_encoding_to_char");
-extern fn int    pg_valid_server_encoding_id(int encoding)
-@extern("pg_valid_server_encoding_id");
-
 /* === in fe-secure-openssl.c === */
 
 /* Support for overriding sslpassword handling with a callback */
@@ -757,3 +749,12 @@ extern fn void setSSLKeyPassHook_OpenSSL(PQsslKeyPassHook_OpenSSL_type hook)
 @extern("PQsetSSLKeyPassHook_OpenSSL");
 extern fn int defaultSSLKeyPassHook_OpenSSL(char *buf, int size, PGconn
 *conn) @extern("PQdefaultSSLKeyPassHook_OpenSSL");
+
+/* === in encnames.c === */
+
+module postgres::pg;
+extern fn int    char_to_encoding(char *name) @extern("pg_char_to_encoding");
+extern fn char *encoding_to_char(int encoding)
+@extern("pg_encoding_to_char");
+extern fn int    valid_server_encoding_id(int encoding)
+@extern("pg_valid_server_encoding_id");
