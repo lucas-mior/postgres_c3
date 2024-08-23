@@ -286,44 +286,44 @@ module postgres::pq;
 
 /* make a new client connection to the backend */
 /* Asynchronous (non-blocking) */
-extern fn PGconn *PQconnectStart(char *conninfo) @extern("PQconnectStart");
-extern fn PGconn *PQconnectStartParams(char *const *keywords,
-                                    char *const *values, int expand_dbname)
+extern fn PGconn *pq_connectStart(char *conninfo) @extern("PQconnectStart");
+extern fn PGconn *pq_connectStartParams(char **keywords,
+                                    char **values, int expand_dbname)
                                     @extern("PQconnectStartParams");
-extern fn PostgresPollingStatusType PQconnectPoll(PGconn *conn)
+extern fn PostgresPollingStatusType pq_connectPoll(PGconn *conn)
 @extern("PQconnectPoll");
 
 /* Synchronous (blocking) */
-extern fn PGconn *PQconnectdb(char *conninfo) @extern("PQconnectdb");
-extern fn PGconn *PQconnectdbParams(char *const *keywords,
-                                 char *const *values, int expand_dbname)
+extern fn PGconn *pq_connectdb(char *conninfo) @extern("PQconnectdb");
+extern fn PGconn *pq_connectdbParams(char **keywords,
+                                 char **values, int expand_dbname)
                                  @extern("PQconnectdbParams");
-extern fn PGconn *PQsetdbLogin(char *pghost, const char *pgport,
-                            char *pgoptions, const char *pgtty,
+extern fn PGconn *pq_setdbLogin(char *pghost, char *pgport,
+                            char *pgoptions, char *pgtty,
                             char *dbName,
-                            char *login, const char *pwd)
+                            char *login, char *pwd)
                             @extern("PQsetdbLogin");
 
-macro PQsetdb(m_pghost,m_pgport,m_pgopt,m_pgtty,m_dbname) {
-    return PQsetdbLogin(m_pghost,m_pgport,
+macro pq_setdb(m_pghost,m_pgport,m_pgopt,m_pgtty,m_dbname) {
+    return pq_setdbLogin(m_pghost,m_pgport,
                         m_pgopt, m_pgtty, m_dbname, null, null);
 }
 
 /* close the current connection and free the PGconn data structure */
-extern fn void PQfinish(PGconn *conn) @extern("PQfinish");
+extern fn void pq_finish(PGconn *conn) @extern("PQfinish");
 
-/* get info about connection options known to PQconnectdb */
-extern fn PQconninfoOption *PQconndefaults() @extern("PQconndefaults");
+/* get info about connection options known to pq_connectdb */
+extern fn PQconninfoOption *pq_conndefaults() @extern("PQconndefaults");
 
-/* parse connection options in same way as PQconnectdb */
-extern fn PQconninfoOption *PQconninfoParse(char *conninfo, char **errmsg)
+/* parse connection options in same way as pq_connectdb */
+extern fn PQconninfoOption *pq_conninfoParse(char *conninfo, char **errmsg)
 @extern("PQconninfoParse");
 
 /* return the connection options used by a live connection */
-extern fn PQconninfoOption *PQconninfo(PGconn *conn) @extern("PQconninfo");
+extern fn PQconninfoOption *pq_conninfo(PGconn *conn) @extern("PQconninfo");
 
-/* free the data structure returned by PQconndefaults() or PQconninfoParse() */
-extern fn void PQconninfoFree(PQconninfoOption *connOptions)
+/* free the data structure returned by pq_conndefaults() or pq_conninfoParse() */
+extern fn void pq_conninfoFree(PQconninfoOption *connOptions)
 @extern("PQconninfoFree");
 
 /*
@@ -332,17 +332,17 @@ extern fn void PQconninfoFree(PQconninfoOption *connOptions)
  */
 /* Asynchronous (non-blocking) */
 extern fn int    PQresetStart(PGconn *conn) @extern("PQresetStart");
-extern fn PostgresPollingStatusType PQresetPoll(PGconn *conn)
+extern fn PostgresPollingStatusType pq_resetPoll(PGconn *conn)
 @extern("PQresetPoll");
 
 /* Synchronous (blocking) */
-extern fn void PQreset(PGconn *conn) @extern("PQreset");
+extern fn void pq_reset(PGconn *conn) @extern("PQreset");
 
 /* request a cancel structure */
-extern fn PGcancel *PQgetCancel(PGconn *conn) @extern("PQgetCancel");
+extern fn PGcancel *pq_getCancel(PGconn *conn) @extern("PQgetCancel");
 
 /* free a cancel structure */
-extern fn void PQfreeCancel(PGcancel *cancel) @extern("PQfreeCancel");
+extern fn void pq_freeCancel(PGcancel *cancel) @extern("PQfreeCancel");
 
 /* issue a cancel request */
 extern fn int    PQcancel(PGcancel *cancel, char *errbuf, int errbufsize)
@@ -352,18 +352,18 @@ extern fn int    PQcancel(PGcancel *cancel, char *errbuf, int errbufsize)
 extern fn int    PQrequestCancel(PGconn *conn) @extern("PQrequestCancel");
 
 /* Accessor functions for PGconn objects */
-extern fn char *PQdb(PGconn *conn) @extern("PQdb");
-extern fn char *PQuser(PGconn *conn) @extern("PQuser");
-extern fn char *PQpass(PGconn *conn) @extern("PQpass");
-extern fn char *PQhost(PGconn *conn) @extern("PQhost");
-extern fn char *PQhostaddr(PGconn *conn) @extern("PQhostaddr");
-extern fn char *PQport(PGconn *conn) @extern("PQport");
-extern fn char *PQtty(PGconn *conn) @extern("PQtty");
-extern fn char *PQoptions(PGconn *conn) @extern("PQoptions");
-extern fn PGConnStatusType PQstatus(PGconn *conn) @extern("PQstatus");
-extern fn PGTransactionStatusType PQtransactionStatus(PGconn *conn)
+extern fn char *pq_db(PGconn *conn) @extern("PQdb");
+extern fn char *pq_user(PGconn *conn) @extern("PQuser");
+extern fn char *pq_pass(PGconn *conn) @extern("PQpass");
+extern fn char *pq_host(PGconn *conn) @extern("PQhost");
+extern fn char *pq_hostaddr(PGconn *conn) @extern("PQhostaddr");
+extern fn char *pq_port(PGconn *conn) @extern("PQport");
+extern fn char *pq_tty(PGconn *conn) @extern("PQtty");
+extern fn char *pq_options(PGconn *conn) @extern("PQoptions");
+extern fn PGConnStatusType pq_status(PGconn *conn) @extern("PQstatus");
+extern fn PGTransactionStatusType pq_transactionStatus(PGconn *conn)
 @extern("PQtransactionStatus");
-extern fn char *PQparameterStatus(const PGconn *conn,
+extern fn char *pq_parameterStatus(PGconn *conn,
                                      char *paramName)
                                      @extern("PQparameterStatus");
 extern fn int    PQprotocolVersion(PGconn *conn) @extern("PQprotocolVersion");
@@ -387,9 +387,9 @@ extern fn int    PQsetClientEncoding(PGconn *conn, char *encoding)
 extern fn int    PQsslInUse(PGconn *conn) @extern("PQsslInUse");
 extern fn void *PQsslStruct(PGconn *conn, char *struct_name)
 @extern("PQsslStruct");
-extern fn char *PQsslAttribute(PGconn *conn, const char *attribute_name)
+extern fn char *PQsslAttribute(PGconn *conn, char *attribute_name)
 @extern("PQsslAttribute");
-extern fn char *const *PQsslAttributeNames(PGconn *conn) @extern("const ");
+extern fn char **PQsslAttributeNames(PGconn *conn) @extern("PQsslAttributeNames");
 
 /* Get the OpenSSL structure associated with a connection. Returns NULL for
  * unencrypted connections or if any other TLS library is in use. */
@@ -459,7 +459,7 @@ extern fn PGresult *PQexecParams(PGconn *conn,
                               char *command,
                               int nParams,
                               Oid *paramTypes,
-                              char *const *paramValues,
+                              char **paramValues,
                               int *paramLengths,
                               int *paramFormats,
                               int resultFormat) @extern("PQexecParams");
@@ -469,7 +469,7 @@ extern fn PGresult *PQprepare(PGconn *conn, char *stmtName,
 extern fn PGresult *PQexecPrepared(PGconn *conn,
                                 char *stmtName,
                                 int nParams,
-                                char *const *paramValues,
+                                char **paramValues,
                                 int *paramLengths,
                                 int *paramFormats,
                                 int resultFormat) @extern("PQexecPrepared");
@@ -482,7 +482,7 @@ extern fn int    PQsendQueryParams(PGconn *conn,
                               char *command,
                               int nParams,
                               Oid *paramTypes,
-                              char *const *paramValues,
+                              char **paramValues,
                               int *paramLengths,
                               int *paramFormats,
                               int resultFormat) @extern("PQsendQueryParams");
@@ -492,7 +492,7 @@ extern fn int    PQsendPrepare(PGconn *conn, char *stmtName,
 extern fn int    PQsendQueryPrepared(PGconn *conn,
                                 char *stmtName,
                                 int nParams,
-                                char *const *paramValues,
+                                char **paramValues,
                                 int *paramLengths,
                                 int *paramFormats,
                                 int resultFormat)
@@ -538,8 +538,8 @@ extern fn int    PQsetnonblocking(PGconn *conn, int arg)
 extern fn int    PQisnonblocking(PGconn *conn) @extern("PQisnonblocking");
 extern fn int    PQisthreadsafe() @extern("PQisthreadsafe");
 extern fn PGPing PQping(char *conninfo) @extern("PQping");
-extern fn PGPing PQpingParams(char *const *keywords,
-                           char *const *values, int expand_dbname)
+extern fn PGPing PQpingParams(char **keywords,
+                           char **values, int expand_dbname)
                            @extern("PQpingParams");
 
 /* Force the write buffer to be written (or at least try) */
