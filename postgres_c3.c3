@@ -1,4 +1,5 @@
 import libc;
+import std::io;
 
 def PG_Int64_Type = long;
 def Oid = uint;
@@ -233,7 +234,7 @@ struct PQArgBlock {
  * PGresAttDesc -- Data about a single attribute (column) of a query result
  * ----------------
  */
-struct PQresAttDesc {
+struct PGresAttDesc {
 	char	   *name;			/* column name */
 	Oid			tableid;		/* source table, if known */
 	int			columnid;		/* source column, if known */
@@ -587,3 +588,8 @@ def PQsslKeyPassHook_OpenSSL_type = fn int (char *buf, int size, PGconn *conn);
 extern fn PQsslKeyPassHook_OpenSSL_type pq_getSSLKeyPassHook_OpenSSL() @extern("PQgetSSLKeyPassHook_OpenSSL");
 extern fn void pq_setSSLKeyPassHook_OpenSSL(PQsslKeyPassHook_OpenSSL_type hook) @extern("PQsetSSLKeyPassHook_OpenSSL");
 extern fn int pq_defaultSSLKeyPassHook_OpenSSL(char *buf, int size, PGconn *conn) @extern("PQdefaultSSLKeyPassHook_OpenSSL");
+
+fn int main(String [] args) {
+    PGconn *conn = pq_connect_start("aaa");
+    return 0;
+}
