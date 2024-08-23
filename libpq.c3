@@ -276,6 +276,7 @@ struct PGresAttDesc {
     int            atttypmod;        /* type-specific modifier info */
 }
 
+module postgres::pq;
 /* ----------------
  * Exported functions of libpq
  * ----------------
@@ -409,9 +410,8 @@ extern PQnoticeProcessor PQsetNoticeProcessor(PGconn *conn,
  *       Only required for multithreaded apps that use kerberos
  *       both within their app and for postgresql connections.
  */
-typedef void (*pgthreadlock_t) (int acquire);
-
-extern pgthreadlock_t PQregisterThreadLock(pgthreadlock_t newhandler);
+def PGthreadlock_t = fn void (int acquire);
+extern fn PGthreadlock_t PQregisterThreadLock(PGthreadlock_t newhandler);
 
 /* === in fe-trace.c === */
 extern void PQtrace(PGconn *conn, FILE *debug_port);
