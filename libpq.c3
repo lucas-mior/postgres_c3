@@ -1,8 +1,8 @@
 /*-------------------------------------------------------------------------
  *
  * libpq.c3
- *      This file contains definitions for structures and
- *      externs for functions used by frontend postgres applications.
+ *    This file contains definitions for structures and
+ *    externs for functions used by frontend postgres applications.
  *    Based on libpq-fe.h.
  *
  * Portions Copyright (c) 1996-2023, PostgreSQL Global Development Group
