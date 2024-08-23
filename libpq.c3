@@ -29,45 +29,44 @@ macro atooid(x) {
  * between frontend and backend, and also to export them to libpq
  * applications.
  */
-#define PG_DIAG_SEVERITY		'S'
-#define PG_DIAG_SEVERITY_NONLOCALIZED 'V'
-#define PG_DIAG_SQLSTATE		'C'
-#define PG_DIAG_MESSAGE_PRIMARY 'M'
-#define PG_DIAG_MESSAGE_DETAIL	'D'
-#define PG_DIAG_MESSAGE_HINT	'H'
-#define PG_DIAG_STATEMENT_POSITION 'P'
-#define PG_DIAG_INTERNAL_POSITION 'p'
-#define PG_DIAG_INTERNAL_QUERY	'q'
-#define PG_DIAG_CONTEXT			'W'
-#define PG_DIAG_SCHEMA_NAME		's'
-#define PG_DIAG_TABLE_NAME		't'
-#define PG_DIAG_COLUMN_NAME		'c'
-#define PG_DIAG_DATATYPE_NAME	'd'
-#define PG_DIAG_CONSTRAINT_NAME 'n'
-#define PG_DIAG_SOURCE_FILE		'F'
-#define PG_DIAG_SOURCE_LINE		'L'
-#define PG_DIAG_SOURCE_FUNCTION 'R'
-
-#endif							/* POSTGRES_EXT_H */
+module postgres::pg;
+const char DIAG_SEVERITY = 'S';
+const char DIAG_SEVERITY_NONLOCALIZED = 'V';
+const char DIAG_SQLSTATE = 'C';
+const char DIAG_MESSAGE_PRIMARY = 'M';
+const char DIAG_MESSAGE_DETAIL = 'D';
+const char DIAG_MESSAGE_HINT = 'H';
+const char DIAG_STATEMENT_POSITION = 'P';
+const char DIAG_INTERNAL_POSITION = 'p';
+const char DIAG_INTERNAL_QUERY = 'q';
+const char DIAG_CONTEXT = 'W';
+const char DIAG_SCHEMA_NAME = 's';
+const char DIAG_TABLE_NAME = 't';
+const char DIAG_COLUMN_NAME = 'c';
+const char DIAG_DATATYPE_NAME = 'd';
+const char DIAG_CONSTRAINT_NAME = 'n';
+const char DIAG_SOURCE_FILE = 'F';
+const char DIAG_SOURCE_LINE = 'L';
+const char DIAG_SOURCE_FUNCTION = 'R';
 
 /*
  * These symbols may be used in compile-time #ifdef tests for the availability
  * of newer libpq features.
  */
 /* Indicates presence of PQenterPipelineMode and friends */
-#define LIBPQ_HAS_PIPELINING 1
+const int LIBPQ_HAS_PIPELINING = 1;
 /* Indicates presence of PQsetTraceFlags; also new PQtrace output format */
-#define LIBPQ_HAS_TRACE_FLAGS 1
+const int LIBPQ_HAS_TRACE_FLAGS = 1;
 /* Indicates that PQsslAttribute(NULL, "library") is useful */
-#define LIBPQ_HAS_SSL_LIBRARY_DETECTION 1
+const int LIBPQ_HAS_SSL_LIBRARY_DETECTION = 1;
 
 /*
  * Option flags for PQcopyResult
  */
-#define PG_COPYRES_ATTRS		  0x01
-#define PG_COPYRES_TUPLES		  0x02	/* Implies PG_COPYRES_ATTRS */
-#define PG_COPYRES_EVENTS		  0x04
-#define PG_COPYRES_NOTICEHOOKS	  0x08
+const int COPYRES_ATTRS		 = 0x01;
+const int COPYRES_TUPLES		 = 0x02;	/* Implies PG_COPYRES_ATTRS */
+const int COPYRES_EVENTS		 = 0x04;
+const int COPYRES_NOTICEHOOKS = 0x08;
 
 /* Application-visible enum types */
 
