@@ -1,0 +1,14 @@
+# postgres_sql
+This is an attempt at providing C3 bindings for the pq library, used by postgres
+clients, for experimental purposes.
+
+## Files
+- `main.c` contains a simple test program that connects to a database on
+  localhost.
+- `postgres.c3` is a hand made translation of the libpq headers from my linux
+  system.
+
+## How to test it
+```
+c3c compile-run -l /usr/lib/libpq.so main.c3 postgres.c3
+```

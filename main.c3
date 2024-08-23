@@ -5,8 +5,8 @@ import libc;
 fn int main(String [] args) {
     PGconn *conn = postgres::pq_connect_db(
         " host=localhost"
-        " user=lucas"
-        " dbname=lucas"
+        " user=user"
+        " dbname=user"
     );
 
     if (postgres::pq_status(conn) == CONNECTION_BAD) {
