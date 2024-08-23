@@ -11,25 +11,18 @@
  *-------------------------------------------------------------------------
  */
 
-/* Define to the name of a signed 64-bit integer type. */
-#define PG_INT64_TYPE long int
-
 /*
  * Object ID is a fundamental type in Postgres.
  */
-typedef unsigned int Oid;
+distinct Oid = uint;
 
-#define InvalidOid		(Oid(0))
+// #define InvalidOid		(Oid(0))
 
-#define OID_MAX  UINT_MAX
-/* you will need to include <limits.h> to use the above #define */
+const uint OID_MAX = uint.max;
 
-#define atooid(x) ((Oid) strtoul((x), NULL, 10))
-/* the above needs <stdlib.h> */
-
-
-/* Define a signed 64-bit integer type for use in client API declarations. */
-typedef PG_INT64_TYPE pg_int64;
+macro atooid(x) {
+    return (Oid) strtoul((x), NULL, 10);
+}
 
 /*
  * Identifiers of error message fields.  Kept here to keep common
@@ -649,13 +642,13 @@ extern int	lo_close(PGconn *conn, int fd);
 extern int	lo_read(PGconn *conn, int fd, char *buf, size_t len);
 extern int	lo_write(PGconn *conn, int fd, const char *buf, size_t len);
 extern int	lo_lseek(PGconn *conn, int fd, int offset, int whence);
-extern pg_int64 lo_lseek64(PGconn *conn, int fd, pg_int64 offset, int whence);
+extern long lo_lseek64(PGconn *conn, int fd, long offset, int whence);
 extern Oid	lo_creat(PGconn *conn, int mode);
 extern Oid	lo_create(PGconn *conn, Oid lobjId);
 extern int	lo_tell(PGconn *conn, int fd);
-extern pg_int64 lo_tell64(PGconn *conn, int fd);
+extern long lo_tell64(PGconn *conn, int fd);
 extern int	lo_truncate(PGconn *conn, int fd, size_t len);
-extern int	lo_truncate64(PGconn *conn, int fd, pg_int64 len);
+extern int	lo_truncate64(PGconn *conn, int fd, long len);
 extern int	lo_unlink(PGconn *conn, Oid lobjId);
 extern Oid	lo_import(PGconn *conn, const char *filename);
 extern Oid	lo_import_with_oid(PGconn *conn, const char *filename, Oid lobjId);
