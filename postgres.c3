@@ -141,20 +141,21 @@ enum PGpipelineStatus {
 /* PGconn encapsulates a connection to the backend.
  * The contents of this struct are not supposed to be known to applications.
  */
-typedef struct pg_conn PGconn;
+def PGconn = void;
 
 /* PGresult encapsulates the result of a query (or more precisely, of a single
  * SQL command --- a query string given to PQsendQuery can contain multiple
  * commands and thus return multiple PGresult objects).
  * The contents of this struct are not supposed to be known to applications.
  */
-typedef struct pg_result PGresult;
+def PGresult = void;
 
 /* PGcancel encapsulates the information needed to cancel a running
  * query on an existing connection.
  * The contents of this struct are not supposed to be known to applications.
  */
-typedef struct pg_cancel PGcancel;
+def PGcancel = void;
+
 
 /* PGnotify represents the occurrence of a NOTIFY message.
  * Ideally this would be an opaque typedef, but it's so simple that it's
@@ -162,36 +163,34 @@ typedef struct pg_cancel PGcancel;
  * NOTE: in Postgres 6.4 and later, the be_pid is the notifying backend's,
  * whereas in earlier versions it was always your own backend's PID.
  */
-typedef struct pgNotify
-{
+struct PGnotify {
 	char	   *relname;		/* notification condition name */
 	int			be_pid;			/* process ID of notifying server process */
 	char	   *extra;			/* notification parameter */
 	/* Fields below here are private to libpq; apps should not use 'em */
-	struct pgNotify *next;		/* list link */
-} PGnotify;
+	PGnotify *next;		/* list link */
+}
 
 /* Function types for notice-handling callbacks */
-typedef void (*PQnoticeReceiver) (void *arg, const PGresult *res);
-typedef void (*PQnoticeProcessor) (void *arg, const char *message);
+def PQnoticeReceiver = fn void (void *arg, PGresult *res);
+def PQnoticeProcessor = fn void (void *arg, char *message);
 
 /* Print options for PQprint() */
-typedef char pqbool;
+def PQbool = char;
 
-typedef struct _PQprintOpt
-{
-	pqbool		header;			/* print output field headings and row count */
-	pqbool		align;			/* fill align the fields */
-	pqbool		standard;		/* old brain dead format */
-	pqbool		html3;			/* output html tables */
-	pqbool		expanded;		/* expand tables */
-	pqbool		pager;			/* use pager for output if needed */
+struct PQprintOpt {
+	PQbool		header;			/* print output field headings and row count */
+	PQbool		align;			/* fill align the fields */
+	PQbool		standard;		/* old brain dead format */
+	PQbool		html3;			/* output html tables */
+	PQbool		expanded;		/* expand tables */
+	PQbool		pager;			/* use pager for output if needed */
 	char	   *fieldSep;		/* field separator */
 	char	   *tableOpt;		/* insert to HTML <table ...> */
 	char	   *caption;		/* HTML <caption> */
 	char	  **fieldName;		/* null terminated array of replacement field
 								 * names */
-} PQprintOpt;
+}
 
 /* ----------------
  * Structure for the conninfo parameter definitions returned by PQconndefaults
@@ -202,8 +201,7 @@ typedef struct _PQprintOpt
  * will release both the val strings and the PQconninfoOption array itself.
  * ----------------
  */
-typedef struct _PQconninfoOption
-{
+struct PQconninfoOption {
 	char	   *keyword;		/* The keyword of the option			*/
 	char	   *envvar;			/* Fallback environment variable name	*/
 	char	   *compiled;		/* Fallback compiled in default value	*/
@@ -215,29 +213,27 @@ typedef struct _PQconninfoOption
 								 * hide value "D"  Debug option - don't show
 								 * by default */
 	int			dispsize;		/* Field size in characters for dialog	*/
-} PQconninfoOption;
+}
 
 /* ----------------
  * PQArgBlock -- structure for PQfn() arguments
  * ----------------
  */
-typedef struct
-{
+struct PQArgBlock {
 	int			len;
 	int			isint;
-	union
+	union u
 	{
 		int		   *ptr;		/* can't use void (dec compiler barfs)	 */
 		int			integer;
-	}			u;
-} PQArgBlock;
+	}
+}
 
 /* ----------------
  * PGresAttDesc -- Data about a single attribute (column) of a query result
  * ----------------
  */
-typedef struct pgresAttDesc
-{
+struct PQresAttDesc {
 	char	   *name;			/* column name */
 	Oid			tableid;		/* source table, if known */
 	int			columnid;		/* source column, if known */
@@ -245,7 +241,7 @@ typedef struct pgresAttDesc
 	Oid			typid;			/* type id */
 	int			typlen;			/* type size */
 	int			atttypmod;		/* type-specific modifier info */
-} PGresAttDesc;
+}
 
 /* ----------------
  * Exported functions of libpq
