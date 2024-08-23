@@ -331,7 +331,7 @@ extern fn void pq_conninfoFree(PQconninfoOption *connOptions)
  * parameters
  */
 /* Asynchronous (non-blocking) */
-extern fn int    PQresetStart(PGconn *conn) @extern("PQresetStart");
+extern fn int pq_resetStart(PGconn *conn) @extern("PQresetStart");
 extern fn PostgresPollingStatusType pq_resetPoll(PGconn *conn)
 @extern("PQresetPoll");
 
@@ -345,11 +345,11 @@ extern fn PGcancel *pq_getCancel(PGconn *conn) @extern("PQgetCancel");
 extern fn void pq_freeCancel(PGcancel *cancel) @extern("PQfreeCancel");
 
 /* issue a cancel request */
-extern fn int    PQcancel(PGcancel *cancel, char *errbuf, int errbufsize)
+extern fn int pq_cancel(PGcancel *cancel, char *errbuf, int errbufsize)
 @extern("PQcancel");
 
 /* backwards compatible version of PQcancel; not thread-safe */
-extern fn int    PQrequestCancel(PGconn *conn) @extern("PQrequestCancel");
+extern fn int pq_requestCancel(PGconn *conn) @extern("PQrequestCancel");
 
 /* Accessor functions for PGconn objects */
 extern fn char *pq_db(PGconn *conn) @extern("PQdb");
@@ -366,64 +366,64 @@ extern fn PGTransactionStatusType pq_transactionStatus(PGconn *conn)
 extern fn char *pq_parameterStatus(PGconn *conn,
                                      char *paramName)
                                      @extern("PQparameterStatus");
-extern fn int    PQprotocolVersion(PGconn *conn) @extern("PQprotocolVersion");
-extern fn int    PQserverVersion(PGconn *conn) @extern("PQserverVersion");
-extern fn char *PQerrorMessage(PGconn *conn) @extern("PQerrorMessage");
-extern fn int    PQsocket(PGconn *conn) @extern("PQsocket");
-extern fn int    PQbackendPID(PGconn *conn) @extern("PQbackendPID");
-extern fn PGpipelineStatus PQpipelineStatus(PGconn *conn)
+extern fn int pq_protocolVersion(PGconn *conn) @extern("PQprotocolVersion");
+extern fn int pq_serverVersion(PGconn *conn) @extern("PQserverVersion");
+extern fn char *pq_errorMessage(PGconn *conn) @extern("PQerrorMessage");
+extern fn int pq_socket(PGconn *conn) @extern("PQsocket");
+extern fn int pq_backendPID(PGconn *conn) @extern("PQbackendPID");
+extern fn PGpipelineStatus pq_pipelineStatus(PGconn *conn)
 @extern("PQpipelineStatus");
-extern fn int    PQconnectionNeedsPassword(PGconn *conn)
+extern fn int pq_connectionNeedsPassword(PGconn *conn)
 @extern("PQconnectionNeedsPassword");
-extern fn int    PQconnectionUsedPassword(PGconn *conn)
+extern fn int pq_connectionUsedPassword(PGconn *conn)
 @extern("PQconnectionUsedPassword");
-extern fn int    PQconnectionUsedGSSAPI(PGconn *conn)
+extern fn int pq_connectionUsedGSSAPI(PGconn *conn)
 @extern("PQconnectionUsedGSSAPI");
-extern fn int    PQclientEncoding(PGconn *conn) @extern("PQclientEncoding");
-extern fn int    PQsetClientEncoding(PGconn *conn, char *encoding)
+extern fn int pq_clientEncoding(PGconn *conn) @extern("PQclientEncoding");
+extern fn int pq_setClientEncoding(PGconn *conn, char *encoding)
 @extern("PQsetClientEncoding");
 
 /* SSL information functions */
-extern fn int    PQsslInUse(PGconn *conn) @extern("PQsslInUse");
-extern fn void *PQsslStruct(PGconn *conn, char *struct_name)
+extern fn int pq_sslInUse(PGconn *conn) @extern("PQsslInUse");
+extern fn void *pq_sslStruct(PGconn *conn, char *struct_name)
 @extern("PQsslStruct");
-extern fn char *PQsslAttribute(PGconn *conn, char *attribute_name)
+extern fn char *pq_sslAttribute(PGconn *conn, char *attribute_name)
 @extern("PQsslAttribute");
-extern fn char **PQsslAttributeNames(PGconn *conn) @extern("PQsslAttributeNames");
+extern fn char **pq_sslAttributeNames(PGconn *conn) @extern("PQsslAttributeNames");
 
 /* Get the OpenSSL structure associated with a connection. Returns NULL for
  * unencrypted connections or if any other TLS library is in use. */
-extern fn void *PQgetssl(PGconn *conn) @extern("PQgetssl");
+extern fn void *pq_getssl(PGconn *conn) @extern("PQgetssl");
 
 /* Tell libpq whether it needs to initialize OpenSSL */
-extern fn void PQinitSSL(int do_init) @extern("PQinitSSL");
+extern fn void pq_initSSL(int do_init) @extern("PQinitSSL");
 
 /* More detailed way to tell libpq whether it needs to initialize OpenSSL */
-extern fn void PQinitOpenSSL(int do_ssl, int do_crypto)
+extern fn void pq_initOpenSSL(int do_ssl, int do_crypto)
 @extern("PQinitOpenSSL");
 
 /* Return true if GSSAPI encryption is in use */
-extern fn int    PQgssEncInUse(PGconn *conn) @extern("PQgssEncInUse");
+extern fn int pq_gssEncInUse(PGconn *conn) @extern("PQgssEncInUse");
 
 /* Returns GSSAPI context if GSSAPI is in use */
-extern fn void *PQgetgssctx(PGconn *conn) @extern("PQgetgssctx");
+extern fn void *pq_getgssctx(PGconn *conn) @extern("PQgetgssctx");
 
 /* Set verbosity for PQerrorMessage and PQresultErrorMessage */
-extern fn PGVerbosity PQsetErrorVerbosity(PGconn *conn, PGVerbosity verbosity)
+extern fn PGVerbosity pq_setErrorVerbosity(PGconn *conn, PGVerbosity verbosity)
 @extern("PQsetErrorVerbosity");
 
 /* Set CONTEXT visibility for PQerrorMessage and PQresultErrorMessage */
-extern fn PGContextVisibility PQsetErrorContextVisibility(PGconn *conn,
+extern fn PGContextVisibility pq_setErrorContextVisibility(PGconn *conn,
                                                        PGContextVisibility
                                                        show_context)
                                                        @extern("PQsetErrorContextVisibility");
 
 /* Override default notice handling routines */
-extern fn PQnoticeReceiver PQsetNoticeReceiver(PGconn *conn,
+extern fn PQnoticeReceiver pq_setNoticeReceiver(PGconn *conn,
                                             PQnoticeReceiver proc,
                                             void *arg)
                                             @extern("PQsetNoticeReceiver");
-extern fn PQnoticeProcessor PQsetNoticeProcessor(PGconn *conn,
+extern fn PQnoticeProcessor pq_setNoticeProcessor(PGconn *conn,
                                               PQnoticeProcessor proc,
                                               void *arg)
                                               @extern("PQsetNoticeProcessor");
@@ -436,26 +436,26 @@ extern fn PQnoticeProcessor PQsetNoticeProcessor(PGconn *conn,
  *       both within their app and for postgresql connections.
  */
 def PGthreadlock_t = fn void (int acquire);
-extern fn PGthreadlock_t PQregisterThreadLock(PGthreadlock_t newhandler)
+extern fn PGthreadlock_t pq_registerThreadLock(PGthreadlock_t newhandler)
 @extern("PQregisterThreadLock");
 
 /* === in fe-trace.c === */
-extern fn void PQtrace(PGconn *conn, FILE *debug_port) @extern("PQtrace");
-extern fn void PQuntrace(PGconn *conn) @extern("PQuntrace");
+extern fn void pq_trace(PGconn *conn, File *debug_port) @extern("PQtrace");
+extern fn void pq_untrace(PGconn *conn) @extern("PQuntrace");
 
 /* flags controlling trace output: */
 /* omit timestamps from each line */
 const int TRACE_SUPPRESS_TIMESTAMPS = (1<<0);
 /* redact portions of some messages, for testing frameworks */
 const int TRACE_REGRESS_MODE = (1<<1);
-extern fn void PQsetTraceFlags(PGconn *conn, int flags)
+extern fn void pq_setTraceFlags(PGconn *conn, int flags)
 @extern("PQsetTraceFlags");
 
 /* === in fe-exec.c === */
 
 /* Simple synchronous query */
-extern fn PGresult *PQexec(PGconn *conn, char *query) @extern("PQexec");
-extern fn PGresult *PQexecParams(PGconn *conn,
+extern fn PGresult *pq_exec(PGconn *conn, char *query) @extern("PQexec");
+extern fn PGresult *pq_execParams(PGconn *conn,
                               char *command,
                               int nParams,
                               Oid *paramTypes,
@@ -463,10 +463,10 @@ extern fn PGresult *PQexecParams(PGconn *conn,
                               int *paramLengths,
                               int *paramFormats,
                               int resultFormat) @extern("PQexecParams");
-extern fn PGresult *PQprepare(PGconn *conn, char *stmtName,
+extern fn PGresult *pq_prepare(PGconn *conn, char *stmtName,
                            char *query, int nParams,
                            Oid *paramTypes) @extern("PQprepare");
-extern fn PGresult *PQexecPrepared(PGconn *conn,
+extern fn PGresult *pq_execPrepared(PGconn *conn,
                                 char *stmtName,
                                 int nParams,
                                 char **paramValues,
@@ -477,8 +477,8 @@ extern fn PGresult *PQexecPrepared(PGconn *conn,
 /* Interface for multiple-result or asynchronous queries */
 const int QUERY_PARAM_MAX_LIMIT = 65535;
 
-extern fn int    PQsendQuery(PGconn *conn, char *query) @extern("PQsendQuery");
-extern fn int    PQsendQueryParams(PGconn *conn,
+extern fn int pq_sendQuery(PGconn *conn, char *query) @extern("PQsendQuery");
+extern fn int pq_sendQueryParams(PGconn *conn,
                               char *command,
                               int nParams,
                               Oid *paramTypes,
@@ -486,10 +486,10 @@ extern fn int    PQsendQueryParams(PGconn *conn,
                               int *paramLengths,
                               int *paramFormats,
                               int resultFormat) @extern("PQsendQueryParams");
-extern fn int    PQsendPrepare(PGconn *conn, char *stmtName,
+extern fn int pq_sendPrepare(PGconn *conn, char *stmtName,
                           char *query, int nParams,
                           Oid *paramTypes) @extern("PQsendPrepare");
-extern fn int    PQsendQueryPrepared(PGconn *conn,
+extern fn int pq_sendQueryPrepared(PGconn *conn,
                                 char *stmtName,
                                 int nParams,
                                 char **paramValues,
@@ -497,59 +497,59 @@ extern fn int    PQsendQueryPrepared(PGconn *conn,
                                 int *paramFormats,
                                 int resultFormat)
                                 @extern("PQsendQueryPrepared");
-extern fn int    PQsetSingleRowMode(PGconn *conn) @extern("PQsetSingleRowMode");
-extern fn PGresult *PQgetResult(PGconn *conn) @extern("PQgetResult");
+extern fn int pq_setSingleRowMode(PGconn *conn) @extern("PQsetSingleRowMode");
+extern fn PGresult *pq_getResult(PGconn *conn) @extern("PQgetResult");
 
 /* Routines for managing an asynchronous query */
-extern fn int    PQisBusy(PGconn *conn) @extern("PQisBusy");
-extern fn int    PQconsumeInput(PGconn *conn) @extern("PQconsumeInput");
+extern fn int pq_isBusy(PGconn *conn) @extern("PQisBusy");
+extern fn int pq_consumeInput(PGconn *conn) @extern("PQconsumeInput");
 
 /* Routines for pipeline mode management */
-extern fn int    PQenterPipelineMode(PGconn *conn)
+extern fn int pq_enterPipelineMode(PGconn *conn)
 @extern("PQenterPipelineMode");
-extern fn int    PQexitPipelineMode(PGconn *conn) @extern("PQexitPipelineMode");
-extern fn int    PQpipelineSync(PGconn *conn) @extern("PQpipelineSync");
-extern fn int    PQsendFlushRequest(PGconn *conn) @extern("PQsendFlushRequest");
+extern fn int pq_exitPipelineMode(PGconn *conn) @extern("PQexitPipelineMode");
+extern fn int pq_pipelineSync(PGconn *conn) @extern("PQpipelineSync");
+extern fn int pq_sendFlushRequest(PGconn *conn) @extern("PQsendFlushRequest");
 
 /* LISTEN/NOTIFY support */
-extern fn PGnotify *PQnotifies(PGconn *conn) @extern("PQnotifies");
+extern fn PGnotify *pq_notifies(PGconn *conn) @extern("PQnotifies");
 
 /* Routines for copy in/out */
-extern fn int    PQputCopyData(PGconn *conn, char *buffer, int nbytes)
+extern fn int pq_putCopyData(PGconn *conn, char *buffer, int nbytes)
 @extern("PQputCopyData");
-extern fn int    PQputCopyEnd(PGconn *conn, char *errormsg)
+extern fn int pq_putCopyEnd(PGconn *conn, char *errormsg)
 @extern("PQputCopyEnd");
-extern fn int    PQgetCopyData(PGconn *conn, char **buffer, int async)
+extern fn int pq_getCopyData(PGconn *conn, char **buffer, int async)
 @extern("PQgetCopyData");
 
 /* Deprecated routines for copy in/out */
-extern fn int    PQgetline(PGconn *conn, char *buffer, int length)
+extern fn int pq_getline(PGconn *conn, char *buffer, int length)
 @extern("PQgetline");
-extern fn int    PQputline(PGconn *conn, char *string) @extern("PQputline");
-extern fn int    PQgetlineAsync(PGconn *conn, char *buffer, int bufsize)
+extern fn int pq_putline(PGconn *conn, char *string) @extern("PQputline");
+extern fn int pq_getlineAsync(PGconn *conn, char *buffer, int bufsize)
 @extern("PQgetlineAsync");
-extern fn int    PQputnbytes(PGconn *conn, char *buffer, int nbytes)
+extern fn int pq_putnbytes(PGconn *conn, char *buffer, int nbytes)
 @extern("PQputnbytes");
-extern fn int    PQendcopy(PGconn *conn) @extern("PQendcopy");
+extern fn int pq_endcopy(PGconn *conn) @extern("PQendcopy");
 
 /* Set blocking/nonblocking connection to the backend */
-extern fn int    PQsetnonblocking(PGconn *conn, int arg)
+extern fn int pq_setnonblocking(PGconn *conn, int arg)
 @extern("PQsetnonblocking");
-extern fn int    PQisnonblocking(PGconn *conn) @extern("PQisnonblocking");
-extern fn int    PQisthreadsafe() @extern("PQisthreadsafe");
-extern fn PGPing PQping(char *conninfo) @extern("PQping");
-extern fn PGPing PQpingParams(char **keywords,
+extern fn int pq_isnonblocking(PGconn *conn) @extern("PQisnonblocking");
+extern fn int pq_isthreadsafe() @extern("PQisthreadsafe");
+extern fn PGPing pq_ping(char *conninfo) @extern("PQping");
+extern fn PGPing pq_pingParams(char **keywords,
                            char **values, int expand_dbname)
                            @extern("PQpingParams");
 
 /* Force the write buffer to be written (or at least try) */
-extern fn int    PQflush(PGconn *conn) @extern("PQflush");
+extern fn int pq_flush(PGconn *conn) @extern("PQflush");
 
 /*
  * "Fast path" interface --- not really recommended for application
  * use
  */
-extern fn PGresult *PQfn(PGconn *conn,
+extern fn PGresult *pq_fn(PGconn *conn,
                       int fnid,
                       int *result_buf,
                       int *result_len,
@@ -558,125 +558,125 @@ extern fn PGresult *PQfn(PGconn *conn,
                       int nargs) @extern("PQfn");
 
 /* Accessor functions for PGresult objects */
-extern fn PGExecStatusType PQresultStatus(PGresult *res)
+extern fn PGExecStatusType pq_resultStatus(PGresult *res)
 @extern("PQresultStatus");
-extern fn char *PQresStatus(PGExecStatusType status) @extern("PQresStatus");
-extern fn char *PQresultErrorMessage(PGresult *res)
+extern fn char *pq_resStatus(PGExecStatusType status) @extern("PQresStatus");
+extern fn char *pq_resultErrorMessage(PGresult *res)
 @extern("PQresultErrorMessage");
-extern fn char *PQresultVerboseErrorMessage(PGresult *res,
+extern fn char *pq_resultVerboseErrorMessage(PGresult *res,
                                          PGVerbosity verbosity,
                                          PGContextVisibility show_context)
                                          @extern("PQresultVerboseErrorMessage");
-extern fn char *PQresultErrorField(PGresult *res, int fieldcode)
+extern fn char *pq_resultErrorField(PGresult *res, int fieldcode)
 @extern("PQresultErrorField");
-extern fn int    PQntuples(PGresult *res) @extern("PQntuples");
-extern fn int    PQnfields(PGresult *res) @extern("PQnfields");
-extern fn int    PQbinaryTuples(PGresult *res) @extern("PQbinaryTuples");
-extern fn char *PQfname(PGresult *res, int field_num) @extern("PQfname");
-extern fn int    PQfnumber(PGresult *res, const char *field_name)
+extern fn int pq_ntuples(PGresult *res) @extern("PQntuples");
+extern fn int pq_nfields(PGresult *res) @extern("PQnfields");
+extern fn int pq_binaryTuples(PGresult *res) @extern("PQbinaryTuples");
+extern fn char *pq_fname(PGresult *res, int field_num) @extern("PQfname");
+extern fn int pq_fnumber(PGresult *res, char *field_name)
 @extern("PQfnumber");
-extern fn Oid    PQftable(PGresult *res, int field_num) @extern("PQftable");
-extern fn int    PQftablecol(PGresult *res, int field_num)
+extern fn Oid pq_ftable(PGresult *res, int field_num) @extern("PQftable");
+extern fn int pq_ftablecol(PGresult *res, int field_num)
 @extern("PQftablecol");
-extern fn int    PQfformat(PGresult *res, int field_num) @extern("PQfformat");
-extern fn Oid    PQftype(PGresult *res, int field_num) @extern("PQftype");
-extern fn int    PQfsize(PGresult *res, int field_num) @extern("PQfsize");
-extern fn int    PQfmod(PGresult *res, int field_num) @extern("PQfmod");
-extern fn char *PQcmdStatus(PGresult *res) @extern("PQcmdStatus");
-extern fn char *PQoidStatus(PGresult *res)  @extern("PQoidStatus");   /* old and ugly */
-extern fn Oid    PQoidValue(PGresult *res)  @extern("PQoidValue");   /* new and improved */
-extern fn char *PQcmdTuples(PGresult *res) @extern("PQcmdTuples");
-extern fn char *PQgetvalue(PGresult *res, int tup_num, int field_num)
+extern fn int pq_fformat(PGresult *res, int field_num) @extern("PQfformat");
+extern fn Oid pq_ftype(PGresult *res, int field_num) @extern("PQftype");
+extern fn int pq_fsize(PGresult *res, int field_num) @extern("PQfsize");
+extern fn int pq_fmod(PGresult *res, int field_num) @extern("PQfmod");
+extern fn char *pq_cmdStatus(PGresult *res) @extern("PQcmdStatus");
+extern fn char *pq_oidStatus(PGresult *res)  @extern("PQoidStatus");   /* old and ugly */
+extern fn Oid pq_oidValue(PGresult *res)  @extern("PQoidValue");   /* new and improved */
+extern fn char *pq_cmdTuples(PGresult *res) @extern("PQcmdTuples");
+extern fn char *pq_getvalue(PGresult *res, int tup_num, int field_num)
 @extern("PQgetvalue");
-extern fn int    PQgetlength(PGresult *res, int tup_num, int field_num)
+extern fn int pq_getlength(PGresult *res, int tup_num, int field_num)
 @extern("PQgetlength");
-extern fn int    PQgetisnull(PGresult *res, int tup_num, int field_num)
+extern fn int pq_getisnull(PGresult *res, int tup_num, int field_num)
 @extern("PQgetisnull");
-extern fn int    PQnparams(PGresult *res) @extern("PQnparams");
-extern fn Oid    PQparamtype(PGresult *res, int param_num)
+extern fn int pq_nparams(PGresult *res) @extern("PQnparams");
+extern fn Oid pq_paramtype(PGresult *res, int param_num)
 @extern("PQparamtype");
 
 /* Describe prepared statements and portals */
-extern fn PGresult *PQdescribePrepared(PGconn *conn, char *stmt)
+extern fn PGresult *pq_describePrepared(PGconn *conn, char *stmt)
 @extern("PQdescribePrepared");
-extern fn PGresult *PQdescribePortal(PGconn *conn, char *portal)
+extern fn PGresult *pq_describePortal(PGconn *conn, char *portal)
 @extern("PQdescribePortal");
-extern fn int    PQsendDescribePrepared(PGconn *conn, char *stmt)
+extern fn int pq_sendDescribePrepared(PGconn *conn, char *stmt)
 @extern("PQsendDescribePrepared");
-extern fn int    PQsendDescribePortal(PGconn *conn, char *portal)
+extern fn int pq_sendDescribePortal(PGconn *conn, char *portal)
 @extern("PQsendDescribePortal");
 
 /* Delete a PGresult */
-extern fn void PQclear(PGresult *res) @extern("PQclear");
+extern fn void pq_clear(PGresult *res) @extern("PQclear");
 
 /* For freeing other alloc'd results, such as PGnotify structs */
-extern fn void PQfreemem(void *ptr) @extern("PQfreemem");
+extern fn void pq_freemem(void *ptr) @extern("PQfreemem");
 
 /* Exists for backward compatibility.  bjm 2003-03-24 */
-macro PQfreeNotify(ptr) {
-    return PQfreemem(ptr);
+macro pq_freeNotify(ptr) {
+    return pq_freemem(ptr);
 }
 
 /* Error when no password was given. */
 /* Note: depending on this is deprecated; use PQconnectionNeedsPassword(). */
-const char *PQnoPasswordSupplied = "fe_sendauth: no password supplied\n";
+const char *PQ_NO_PASSWORD_SUPPLIED = "fe_sendauth: no password supplied\n";
 
 /* Create and manipulate PGresults */
-extern fn PGresult *PQmakeEmptyPGresult(PGconn *conn, PGExecStatusType status)
+extern fn PGresult *pq_makeEmptyPGresult(PGconn *conn, PGExecStatusType status)
 @extern("PQmakeEmptyPGresult");
-extern fn PGresult *PQcopyResult(PGresult *src, int flags)
+extern fn PGresult *pq_copyResult(PGresult *src, int flags)
 @extern("PQcopyResult");
-extern fn int    PQsetResultAttrs(PGresult *res, int numAttributes, PGresAttDesc
+extern fn int pq_setResultAttrs(PGresult *res, int numAttributes, PGresAttDesc
 *attDescs) @extern("PQsetResultAttrs");
-extern fn void *PQresultAlloc(PGresult *res, size_t nBytes)
+extern fn void *pq_resultAlloc(PGresult *res, long nbytes)
 @extern("PQresultAlloc");
-extern fn size_t PQresultMemorySize(PGresult *res)
+extern fn long pq_resultMemorySize(PGresult *res)
 @extern("PQresultMemorySize");
-extern fn int    PQsetvalue(PGresult *res, int tup_num, int field_num, char
+extern fn int pq_setvalue(PGresult *res, int tup_num, int field_num, char
 *value, int len) @extern("PQsetvalue");
 
 /* Quoting strings before inclusion in queries. */
-extern fn size_t PQescapeStringConn(PGconn *conn,
-                                 char *to, char *from, size_t length,
+extern fn long pq_escapeStringConn(PGconn *conn,
+                                 char *to, char *from, long length,
                                  int *error) @extern("PQescapeStringConn");
-extern fn char *PQescapeLiteral(PGconn *conn, char *str, size_t len)
+extern fn char *pq_escapeLiteral(PGconn *conn, char *str, long len)
 @extern("PQescapeLiteral");
-extern fn char *PQescapeIdentifier(PGconn *conn, char *str, size_t len)
+extern fn char *pq_escapeIdentifier(PGconn *conn, char *str, long len)
 @extern("PQescapeIdentifier");
-extern fn char *PQescapeByteaConn(PGconn *conn,
-                                        char *from, size_t from_length,
-                                        size_t *to_length)
+extern fn char *pq_escapeByteaConn(PGconn *conn,
+                                        char *from, long from_length,
+                                        long *to_length)
                                         @extern("PQescapeByteaConn");
-extern fn char *PQunescapeBytea(char *strtext,
-                                      size_t *retbuflen)
+extern fn char *pq_unescapeBytea(char *strtext,
+                                      long *retbuflen)
                                       @extern("PQunescapeBytea");
 
 /* These forms are deprecated! */
-extern fn size_t PQescapeString(char *to, char *from, size_t length)
+extern fn long pq_escapeString(char *to, char *from, long length)
 @extern("PQescapeString");
-extern fn char *PQescapeBytea(char *from, size_t from_length,
-                                    size_t *to_length) @extern("PQescapeBytea");
+extern fn char *pq_escapeBytea(char *from, long from_length,
+                                    long *to_length) @extern("PQescapeBytea");
 
 
 
 /* === in fe-print.c === */
 
-extern fn void PQprint(FILE *fout, /* output stream */
+extern fn void pq_print(File *fout, /* output stream */
                     PGresult *res,
                     PQprintOpt *po)  @extern("PQprint");   /* option structure */
 
 /*
  * really old printing routines
  */
-extern fn void PQdisplayTuples(PGresult *res,
-                            FILE *fp,    /* where to send the output */
+extern fn void pq_displayTuples(PGresult *res,
+                            File *fp,    /* where to send the output */
                             int fillAlign,    /* pad the fields with spaces */
                             char *fieldSep,    /* field separator */
                             int printHeader,    /* display headers? */
                             int quiet) @extern("PQdisplayTuples");
 
-extern fn void PQprintTuples(PGresult *res,
-                          FILE *fout,    /* output stream */
+extern fn void pq_printTuples(PGresult *res,
+                          File *fout,    /* output stream */
                           int PrintAttNames,    /* print attribute names */
                           int TerseOutput,    /* delimiter bars */
                           int colWidth)  @extern("PQprintTuples");   /* width of column, if 0, use
@@ -688,9 +688,9 @@ extern fn void PQprintTuples(PGresult *res,
 /* Large-object access routines */
 extern fn int    lo_open(PGconn *conn, Oid lobjId, int mode) @extern("lo_open");
 extern fn int    lo_close(PGconn *conn, int fd) @extern("lo_close");
-extern fn int    lo_read(PGconn *conn, int fd, char *buf, size_t len)
+extern fn int    lo_read(PGconn *conn, int fd, char *buf, long len)
 @extern("lo_read");
-extern fn int    lo_write(PGconn *conn, int fd, char *buf, size_t len)
+extern fn int    lo_write(PGconn *conn, int fd, char *buf, long len)
 @extern("lo_write");
 extern fn int    lo_lseek(PGconn *conn, int fd, int offset, int whence)
 @extern("lo_lseek");
@@ -700,7 +700,7 @@ extern fn Oid    lo_creat(PGconn *conn, int mode) @extern("lo_creat");
 extern fn Oid    lo_create(PGconn *conn, Oid lobjId) @extern("lo_create");
 extern fn int    lo_tell(PGconn *conn, int fd) @extern("lo_tell");
 extern fn long lo_tell64(PGconn *conn, int fd) @extern("lo_tell64");
-extern fn int    lo_truncate(PGconn *conn, int fd, size_t len)
+extern fn int    lo_truncate(PGconn *conn, int fd, long len)
 @extern("lo_truncate");
 extern fn int    lo_truncate64(PGconn *conn, int fd, long len)
 @extern("lo_truncate64");
@@ -714,27 +714,27 @@ extern fn int    lo_export(PGconn *conn, Oid lobjId, char *filename)
 /* === in fe-misc.c === */
 
 /* Get the version of the libpq library in use */
-extern fn int    PQlibVersion() @extern("PQlibVersion");
+extern fn int pq_libVersion() @extern("PQlibVersion");
 
 /* Determine length of multibyte encoded char at *s */
-extern fn int    PQmblen(char *s, int encoding) @extern("PQmblen");
+extern fn int pq_mblen(char *s, int encoding) @extern("PQmblen");
 
 /* Same, but not more than the distance to the end of string s */
-extern fn int    PQmblenBounded(char *s, int encoding)
+extern fn int pq_mblenBounded(char *s, int encoding)
 @extern("PQmblenBounded");
 
 /* Determine display length of multibyte encoded char at *s */
-extern fn int    PQdsplen(char *s, int encoding) @extern("PQdsplen");
+extern fn int pq_dsplen(char *s, int encoding) @extern("PQdsplen");
 
 /* Get encoding id from environment variable PGCLIENTENCODING */
-extern fn int    PQenv2encoding() @extern("PQenv2encoding");
+extern fn int pq_env2encoding() @extern("PQenv2encoding");
 
 /* === in fe-auth.c === */
 
-extern fn char *PQencryptPassword(char *passwd, const char *user)
+extern fn char *pq_encryptPassword(char *passwd, char *user)
 @extern("PQencryptPassword");
-extern fn char *PQencryptPasswordConn(PGconn *conn, char *passwd, const char
-*user, const char *algorithm) @extern("PQencryptPasswordConn");
+extern fn char *pq_encryptPasswordConn(PGconn *conn, char *passwd, char
+*user, char *algorithm) @extern("PQencryptPasswordConn");
 
 /* === in encnames.c === */
 
@@ -748,9 +748,9 @@ extern fn int    pg_valid_server_encoding_id(int encoding)
 
 /* Support for overriding sslpassword handling with a callback */
 def PQsslKeyPassHook_OpenSSL_type = fn int (char *buf, int size, PGconn *conn);
-extern fn PQsslKeyPassHook_OpenSSL_type PQgetSSLKeyPassHook_OpenSSL()
+extern fn PQsslKeyPassHook_OpenSSL_type pq_getSSLKeyPassHook_OpenSSL()
 @extern("PQgetSSLKeyPassHook_OpenSSL");
-extern fn void PQsetSSLKeyPassHook_OpenSSL(PQsslKeyPassHook_OpenSSL_type hook)
+extern fn void pq_setSSLKeyPassHook_OpenSSL(PQsslKeyPassHook_OpenSSL_type hook)
 @extern("PQsetSSLKeyPassHook_OpenSSL");
-extern fn int    PQdefaultSSLKeyPassHook_OpenSSL(char *buf, int size, PGconn
+extern fn int pq_defaultSSLKeyPassHook_OpenSSL(char *buf, int size, PGconn
 *conn) @extern("PQdefaultSSLKeyPassHook_OpenSSL");
