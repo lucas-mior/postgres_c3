@@ -158,7 +158,7 @@ def PGcancel = void;
 
 
 /* PGnotify represents the occurrence of a NOTIFY message.
- * Ideally this would be an opaque typedef, but it's so simple that it's
+ * Ideally this would be an opaque , but it's so simple that it's
  * unlikely to change.
  * NOTE: in Postgres 6.4 and later, the be_pid is the notifying backend's,
  * whereas in earlier versions it was always your own backend's PID.
@@ -376,9 +376,9 @@ extern fn PQnoticeProcessor PQsetNoticeProcessor(PGconn *conn,
  *	   Only required for multithreaded apps that use kerberos
  *	   both within their app and for postgresql connections.
  */
-typedef void (*pgthreadlock_t) (int acquire);
+def PGthreadlock_t = fn void (int acquire);
 
-extern fn pgthreadlock_t PQregisterThreadLock(pgthreadlock_t newhandler);
+extern fn PGthreadlock_t PQregisterThreadLock(PGthreadlock_t newhandler);
 
 /* === in fe-trace.c === */
 extern fn void PQtrace(PGconn *conn, FILE *debug_port);
@@ -637,7 +637,7 @@ extern fn int	pg_valid_server_encoding_id(int encoding);
 /* === in fe-secure-openssl.c === */
 
 /* Support for overriding sslpassword handling with a callback */
-typedef int (*PQsslKeyPassHook_OpenSSL_type) (char *buf, int size, PGconn *conn);
+def PQsslKeyPassHook_OpenSSL_type = fn int (char *buf, int size, PGconn *conn);
 extern fn PQsslKeyPassHook_OpenSSL_type PQgetSSLKeyPassHook_OpenSSL(void);
 extern fn void PQsetSSLKeyPassHook_OpenSSL(PQsslKeyPassHook_OpenSSL_type hook);
 extern fn int	PQdefaultSSLKeyPassHook_OpenSSL(char *buf, int size, PGconn *conn);
