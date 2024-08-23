@@ -1,44 +1,45 @@
 import libc;
 
-#define PG_INT64_TYPE long int
+def PG_Int64_Type = long;
+def Oid = uint;
 
-typedef unsigned int Oid;
+// #define InvalidOid		(Oid(0))
 
-#define InvalidOid		(Oid(0))
+const int OID_MAX = uint.max;
 
-#define OID_MAX  UINT_MAX
+macro atooid(x) {
+    return (Oid) strtoul((x), NULL, 10);
+}
 
-#define atooid(x) ((Oid) strtoul((x), NULL, 10))
+def PG_int64 = PG_Int64_Type;
 
-typedef PG_INT64_TYPE pg_int64;
+const int PG_DIAG_SEVERITY = 'S';
+const int PG_DIAG_SEVERITY_NONLOCALIZED = 'V';
+const int PG_DIAG_SQLSTATE = 'C';
+const int PG_DIAG_MESSAGE_PRIMARY = 'M';
+const int PG_DIAG_MESSAGE_DETAIL = 'D';
+const int PG_DIAG_MESSAGE_HINT = 'H';
+const int PG_DIAG_STATEMENT_POSITION = 'P';
+const int PG_DIAG_INTERNAL_POSITION = 'p';
+const int PG_DIAG_INTERNAL_QUERY = 'q';
+const int PG_DIAG_CONTEXT = 'W';
+const int PG_DIAG_SCHEMA_NAME = 's';
+const int PG_DIAG_TABLE_NAME = 't';
+const int PG_DIAG_COLUMN_NAME = 'c';
+const int PG_DIAG_DATATYPE_NAME = 'd';
+const int PG_DIAG_CONSTRAINT_NAME = 'n';
+const int PG_DIAG_SOURCE_FILE = 'F';
+const int PG_DIAG_SOURCE_LINE = 'L';
+const int PG_DIAG_SOURCE_FUNCTION = 'R';
 
-#define PG_DIAG_SEVERITY		'S'
-#define PG_DIAG_SEVERITY_NONLOCALIZED 'V'
-#define PG_DIAG_SQLSTATE		'C'
-#define PG_DIAG_MESSAGE_PRIMARY 'M'
-#define PG_DIAG_MESSAGE_DETAIL	'D'
-#define PG_DIAG_MESSAGE_HINT	'H'
-#define PG_DIAG_STATEMENT_POSITION 'P'
-#define PG_DIAG_INTERNAL_POSITION 'p'
-#define PG_DIAG_INTERNAL_QUERY	'q'
-#define PG_DIAG_CONTEXT			'W'
-#define PG_DIAG_SCHEMA_NAME		's'
-#define PG_DIAG_TABLE_NAME		't'
-#define PG_DIAG_COLUMN_NAME		'c'
-#define PG_DIAG_DATATYPE_NAME	'd'
-#define PG_DIAG_CONSTRAINT_NAME 'n'
-#define PG_DIAG_SOURCE_FILE		'F'
-#define PG_DIAG_SOURCE_LINE		'L'
-#define PG_DIAG_SOURCE_FUNCTION 'R'
+const int LIBPQ_HAS_PIPELINING = 1;
+const int LIBPQ_HAS_TRACE_FLAGS = 1;
+const int LIBPQ_HAS_SSL_LIBRARY_DETECTION = 1;
 
-#define LIBPQ_HAS_PIPELINING 1
-#define LIBPQ_HAS_TRACE_FLAGS 1
-#define LIBPQ_HAS_SSL_LIBRARY_DETECTION 1
-
-#define PG_COPYRES_ATTRS		  0x01
-#define PG_COPYRES_TUPLES		  0x02	/* Implies PG_COPYRES_ATTRS */
-#define PG_COPYRES_EVENTS		  0x04
-#define PG_COPYRES_NOTICEHOOKS	  0x08
+const int PG_COPYRES_ATTRS = 0x01;
+const int PG_COPYRES_TUPLES = 0x02;
+const int PG_COPYRES_EVENTS = 0x04;
+const int PG_COPYRES_NOTICEHOOKS = 0x08;
 
 typedef enum
 {
