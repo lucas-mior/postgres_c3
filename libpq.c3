@@ -176,20 +176,20 @@ enum PGpipelineStatus {
 /* PGconn encapsulates a connection to the backend.
  * The contents of this struct are not supposed to be known to applications.
  */
-typedef struct pg_conn PGconn;
+def PGconn = void;
 
 /* PGresult encapsulates the result of a query (or more precisely, of a single
  * SQL command --- a query string given to PQsendQuery can contain multiple
  * commands and thus return multiple PGresult objects).
  * The contents of this struct are not supposed to be known to applications.
  */
-typedef struct pg_result PGresult;
+def PGresult = void;
 
 /* PGcancel encapsulates the information needed to cancel a running
  * query on an existing connection.
  * The contents of this struct are not supposed to be known to applications.
  */
-typedef struct pg_cancel PGcancel;
+def PGcancel = void;
 
 /* PGnotify represents the occurrence of a NOTIFY message.
  * Ideally this would be an opaque typedef, but it's so simple that it's
@@ -197,14 +197,13 @@ typedef struct pg_cancel PGcancel;
  * NOTE: in Postgres 6.4 and later, the be_pid is the notifying backend's,
  * whereas in earlier versions it was always your own backend's PID.
  */
-typedef struct pgNotify
-{
+struct PGnotify {
     char       *relname;        /* notification condition name */
     int            be_pid;            /* process ID of notifying server process */
     char       *extra;            /* notification parameter */
     /* Fields below here are private to libpq; apps should not use 'em */
-    struct pgNotify *next;        /* list link */
-} PGnotify;
+    PGnotify *next;        /* list link */
+}
 
 /* Function types for notice-handling callbacks */
 typedef void (*PQnoticeReceiver) (void *arg, const PGresult *res);
