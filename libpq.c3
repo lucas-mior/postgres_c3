@@ -300,8 +300,10 @@ extern fn PGconn *PQsetdbLogin(char *pghost, const char *pgport,
                             char *dbName,
                             char *login, const char *pwd);
 
-#define PQsetdb(M_PGHOST,M_PGPORT,M_PGOPT,M_PGTTY,M_DBNAME)  \
-    PQsetdbLogin(M_PGHOST, M_PGPORT, M_PGOPT, M_PGTTY, M_DBNAME, NULL, NULL)
+macro PQsetdb(m_pghost,m_pgport,m_pgopt,m_pgtty,m_dbname) {
+    return PQsetdbLogin(m_pghost,m_pgport,
+                        m_pgopt, m_pgtty, m_dbname, null, null);
+}
 
 /* close the current connection and free the PGconn data structure */
 extern fn void PQfinish(PGconn *conn);
@@ -411,7 +413,7 @@ extern fn PQnoticeProcessor PQsetNoticeProcessor(PGconn *conn,
  *       both within their app and for postgresql connections.
  */
 def PGthreadlock_t = fn void (int acquire);
-extern fn fn PGthreadlock_t PQregisterThreadLock(PGthreadlock_t newhandler);
+extern fn PGthreadlock_t PQregisterThreadLock(PGthreadlock_t newhandler);
 
 /* === in fe-trace.c === */
 extern fn void PQtrace(PGconn *conn, FILE *debug_port);
@@ -419,9 +421,9 @@ extern fn void PQuntrace(PGconn *conn);
 
 /* flags controlling trace output: */
 /* omit timestamps from each line */
-#define PQTRACE_SUPPRESS_TIMESTAMPS        (1<<0)
+const int TRACE_SUPPRESS_TIMESTAMPS = (1<<0);
 /* redact portions of some messages, for testing frameworks */
-#define PQTRACE_REGRESS_MODE            (1<<1)
+const int TRACE_REGRESS_MODE = (1<<1);
 extern fn void PQsetTraceFlags(PGconn *conn, int flags);
 
 /* === in fe-exec.c === */
