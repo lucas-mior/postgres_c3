@@ -450,7 +450,7 @@ extern fn PGresult *PQexecPrepared(PGconn *conn,
                                 int resultFormat);
 
 /* Interface for multiple-result or asynchronous queries */
-#define PQ_QUERY_PARAM_MAX_LIMIT 65535
+const int QUERY_PARAM_MAX_LIMIT = 65535;
 
 extern fn int    PQsendQuery(PGconn *conn, char *query);
 extern fn int    PQsendQueryParams(PGconn *conn,
@@ -564,11 +564,13 @@ extern fn void PQclear(PGresult *res);
 extern fn void PQfreemem(void *ptr);
 
 /* Exists for backward compatibility.  bjm 2003-03-24 */
-#define PQfreeNotify(ptr) PQfreemem(ptr)
+macro PQfreeNotify(ptr) {
+    return PQfreemem(ptr);
+}
 
 /* Error when no password was given. */
 /* Note: depending on this is deprecated; use PQconnectionNeedsPassword(). */
-#define PQnoPasswordSupplied    "fe_sendauth: no password supplied\n"
+const char *PQnoPasswordSupplied = "fe_sendauth: no password supplied\n";
 
 /* Create and manipulate PGresults */
 extern fn PGresult *PQmakeEmptyPGresult(PGconn *conn, PGExecStatusType status);
