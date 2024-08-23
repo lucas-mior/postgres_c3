@@ -1,4 +1,4 @@
-# postgres_sql
+# postgres_c3
 This is an attempt at providing C3 bindings for the pq library, used by postgres
 clients, for experimental purposes.
 
