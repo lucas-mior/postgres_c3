@@ -6,8 +6,8 @@ import libc;
 fn int main(String [] args) {
     PGconn *conn = pq::connectdb(
         " host=localhost"
-        " user=lucas"
-        " dbname=lucas"
+        " user=user"
+        " dbname=user"
     );
 
     if (pq::status(conn) == PGConnStatusType.BAD) {
